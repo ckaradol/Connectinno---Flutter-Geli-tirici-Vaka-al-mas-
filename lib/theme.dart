@@ -14,7 +14,7 @@ class LightTheme {
   static const Color subtitleColor = Color(0xff687C97);
   static const Color buttonTextColor = Colors.white;
 }
-
+const baseUrl="https://my-fastapi-845518210163.europe-west1.run.app";
 const double defaultPadding = 40;
 const double appPadding = 16;
 const double iconPadding = 16;

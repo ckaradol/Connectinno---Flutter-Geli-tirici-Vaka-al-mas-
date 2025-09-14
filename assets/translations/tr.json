@@ -1,6 +1,6 @@
 {
-  "emailOrPhone": "E-posta veya Telefon Numarası",
   "password": "Şifre",
+  "home": "Anasayfa",
   "forgotPassword": "Şifrenizi mi unuttunuz?",
   "signIn": "Giriş Yap",
   "connectWithGoogle": "Google ile Bağlan",

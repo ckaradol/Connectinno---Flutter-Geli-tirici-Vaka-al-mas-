@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:noteapp/views/home_screen/home.dart';
+import 'package:noteapp/views/login_screen/login.dart';
 
 import '../../models/app_user.dart';
 import '../../repositories/auth_repository.dart';
@@ -18,13 +19,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignInWithEmailPassword>(_onSignInWithEmailPassword);
     on<SignUpWithEmailPassword>(_onSignUpWithEmailPassword);
     on<SignOutRequested>(_onSignOutRequested);
+    on<SignInWithAnonymous>(_onSignInWithAnonymous);
   }
 
   Future<void> _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
     final user = authRepository.currentUser;
     if (user != null) {
+      NavigationService.replaceWith("/home");
       emit(Authenticated(user));
     } else {
+      NavigationService.replaceWith("/login");
       emit(Unauthenticated());
     }
   }
@@ -34,6 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final user = await authRepository.signInWithGoogle();
       if (user != null) {
+        NavigationService.replaceWith("/home");
         emit(Authenticated(user));
       } else {
         emit(Unauthenticated());
@@ -48,6 +53,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final user = await authRepository.signInWithEmailPassword(event.email, event.password);
       if (user != null) {
+        NavigationService.replaceWith("/home");
         emit(Authenticated(user));
       } else {
         emit(Unauthenticated());
@@ -61,6 +67,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final user = await authRepository.signInWithAnonymous();
       if (user != null) {
+        NavigationService.replaceWith("/home");
         emit(Authenticated(user));
       } else {
         emit(Unauthenticated());
@@ -75,7 +82,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final user = await authRepository.signUpWithEmailPassword(event.email, event.password, displayName: event.displayName);
       if(user!=null) {
-        NavigationService.push(HomeScreen());
+        NavigationService.replaceWith("/home");
+        emit(Authenticated(user));
+      } else {
+        emit(Unauthenticated());
       }
 
     } catch (e) {

@@ -7,10 +7,12 @@ class AppUser {
   final String? displayName;
   final String? phoneNumber;
   final String? photoURL;
+  final fb.User user;
   final bool isEmailVerified;
 
 
-  const AppUser({
+  const AppUser( {
+    required this.user,
     required this.uid,
     this.email,
     this.displayName,
@@ -26,6 +28,6 @@ class AppUser {
     displayName: user.displayName,
     phoneNumber: user.phoneNumber,
     photoURL: user.photoURL,
-    isEmailVerified: user.emailVerified,
+    isEmailVerified: user.emailVerified, user: user,
   );
 }

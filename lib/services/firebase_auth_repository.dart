@@ -17,7 +17,7 @@ class FirebaseAuthRepository implements AuthRepository {
   FirebaseAuthRepository({fb.FirebaseAuth? auth}) : _auth = auth ?? fb.FirebaseAuth.instance;
 
   @override
-  AppUser? get currentUser => _auth.currentUser == null ? null : AppUser.fromFirebaseUser(_auth.currentUser!);
+  AppUser? get currentUser => _auth.currentUser == null ? null :  AppUser.fromFirebaseUser(_auth.currentUser!);
 
   @override
   Stream<AppUser?> authStateChanges() => _auth.authStateChanges().map((u) => u == null ? null : AppUser.fromFirebaseUser(u));
@@ -71,9 +71,9 @@ class FirebaseAuthRepository implements AuthRepository {
       final userCred = await _auth.signInWithCredential(credential);
       final user = userCred.user;
       if (user?.phoneNumber == null) {
-        NavigationService.push(ForgotPasswordScreen());
+        NavigationService.navigateTo("/forgotPassword");
       } else {
-        NavigationService.push(HomeScreen());
+        NavigationService.replaceWith("/home");
       }
       return user == null ? null : AppUser.fromFirebaseUser(user);
     } on fb.FirebaseAuthException catch (e) {

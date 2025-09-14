@@ -86,7 +86,7 @@ class RegisterScreen extends StatelessWidget {
                         TextButton(
                           style: ButtonStyle(foregroundColor: WidgetStatePropertyAll(AppTheme.primaryColor(context)), padding: WidgetStatePropertyAll(EdgeInsets.all(0))),
                           onPressed: () {
-                            NavigationService.push(LoginScreen());
+                            NavigationService.navigateTo("/login");
                           },
                           child: Text("signIn".tr()),
                         ),

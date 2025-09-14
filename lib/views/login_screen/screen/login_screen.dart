@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:noteapp/blocs/auth_bloc/auth_bloc.dart';
 
 import '../../../blocs/obsecure_text/obsecure_text_cubit.dart';
 import '../../../services/navigation_service.dart';
@@ -12,8 +13,9 @@ import '../../../widgets/google_button.dart';
 import '../../../views/register_screen/register.dart';
 import '../../forgot_password_screen/screen/forgot_password_screen.dart';
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
-
+   LoginScreen({super.key});
+  final TextEditingController controllerEmail=TextEditingController();
+  final TextEditingController controllerPassword=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,13 +34,14 @@ class LoginScreen extends StatelessWidget {
                       children: [
                         SvgPicture.asset(AppAssets.logo),
                         SizedBox(height: defaultPadding * 2),
-                        AppTextFormField(hintText: "emailOrPhone".tr()),
+                        AppTextFormField(hintText: "email".tr(),controller: controllerEmail,),
                         SizedBox(height: defaultPadding / 2),
                         BlocProvider(
                           create: (_) => ObscureTextCubit(),
                           child: BlocBuilder<ObscureTextCubit, bool>(
                             builder: (context, isObscured) {
                               return AppTextFormField(
+                                controller: controllerPassword,
                                 obsecureText: isObscured,
                                 hintText: "password".tr(),
                                 suffixIcon: IconButton(onPressed: () {
@@ -55,24 +58,27 @@ class LoginScreen extends StatelessWidget {
                             TextButton(
                               style: ButtonStyle(foregroundColor: WidgetStatePropertyAll(AppTheme.primaryColor(context)), padding: WidgetStatePropertyAll(EdgeInsets.all(0))),
                               onPressed: () {
-                                NavigationService.push(ForgotPasswordScreen());
+                                NavigationService.navigateTo("/forgotPassword");
                               },
                               child: Text("forgotPassword".tr()),
                             ),
                           ],
                         ),
-                        SizedBox(height: defaultPadding * 1.5),
-                        AppButton(title: "signIn".tr(),),
+                        SizedBox(height: defaultPadding / 1.5),
+                        AppButton(title: "signIn".tr(),onTap: (){
+                          context.read<AuthBloc>().add(SignInWithEmailPassword(controllerEmail.text, controllerPassword.text));
+                        },),
                         SizedBox(height: defaultPadding),
                         GoogleButton(),
                         SizedBox(height: appPadding),
                         TextButton(
                           style: ButtonStyle(foregroundColor: WidgetStatePropertyAll(AppTheme.primaryColor(context)), padding: WidgetStatePropertyAll(EdgeInsets.all(0))),
                           onPressed: () {
-                            NavigationService.push(ForgotPasswordScreen());
+                            context.read<AuthBloc>().add(SignInWithAnonymous());
                           },
                           child: Text("continueWithoutRegistration".tr()),
                         ),
+                        SizedBox(height: appPadding),
                         Wrap(
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
@@ -80,7 +86,7 @@ class LoginScreen extends StatelessWidget {
                             TextButton(
                               style: ButtonStyle(foregroundColor: WidgetStatePropertyAll(AppTheme.primaryColor(context)), padding: WidgetStatePropertyAll(EdgeInsets.all(0))),
                               onPressed: () {
-                                NavigationService.push(RegisterScreen());
+                                NavigationService.navigateTo("/register");
                               },
                               child: Text("signUp".tr()),
                             ),
