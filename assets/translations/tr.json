@@ -1,0 +1,19 @@
+{
+  "emailOrPhone": "E-posta veya Telefon Numarası",
+  "password": "Şifre",
+  "forgotPassword": "Şifrenizi mi unuttunuz?",
+  "signIn": "Giriş Yap",
+  "connectWithGoogle": "Google ile Bağlan",
+  "dontAccount": "Hesabınız yok mu?",
+  "signUp": "Kayıt Ol",
+  "haveAnAccount": "Hesabınız var mı?",
+  "registerTitle": "Lütfen bilgilerinizi aşağıya yazın",
+  "fullName": "Adınız ve Soyadınız",
+  "email": "Email",
+  "dateOfBirth": "Doğum Tarihi",
+  "forgotPasswordTitle": "Şifremi Unuttum",
+  "send": "Gönder",
+  "sendPhone": "Telefonunuza OTP kodunu gönderdik, lütfen kontrol edin ve aşağıya girin",
+  "phoneVerification": "Telefon Doğrulaması",
+  "pleasePhoneNumber": "Lütfen aşağıya telefon numaranızı girin, size OTP kodunu gönderelim"
+}
