@@ -56,6 +56,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthFailure(e.toString()));
     }
   }
+ Future<void> _onSignInWithAnonymous(SignInWithAnonymous event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      final user = await authRepository.signInWithAnonymous();
+      if (user != null) {
+        emit(Authenticated(user));
+      } else {
+        emit(Unauthenticated());
+      }
+    } catch (e) {
+      emit(AuthFailure(e.toString()));
+    }
+  }
 
   Future<void> _onSignUpWithEmailPassword(SignUpWithEmailPassword event, Emitter<AuthState> emit) async {
     emit(AuthLoading());

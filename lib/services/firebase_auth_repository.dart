@@ -83,48 +83,7 @@ class FirebaseAuthRepository implements AuthRepository {
 
   }
 
-  @override
-  Future<void> verifyPhoneNumber({
-    required String phoneNumber,
-    Duration timeout = const Duration(seconds: 60),
-    required void Function(String verificationId, int? resendToken) codeSent,
-    required void Function(AppUser user) verificationCompleted,
-    required void Function(String verificationId) codeAutoRetrievalTimeout,
-    int? forceResendingToken,
-  }) async {
-    try {
-      await _auth.verifyPhoneNumber(
-        phoneNumber: phoneNumber,
-        timeout: timeout,
-        forceResendingToken: forceResendingToken,
-        verificationCompleted: (fb.PhoneAuthCredential credential) async {
-          try {
-            final currentUser = _auth.currentUser;
-            if (currentUser != null) {
-              final userCred = await currentUser.linkWithCredential(credential);
-              final user = userCred.user;
-              if (user != null) verificationCompleted(AppUser.fromFirebaseUser(user));
-            } else {
-              final userCred = await _auth.signInWithCredential(credential);
-              final user = userCred.user;
-              if (user != null) verificationCompleted(AppUser.fromFirebaseUser(user));
-            }
-          } on fb.FirebaseAuthException catch (e) {
-            showToast("Error", e.message ?? "", true);
-          }
-        },
-        verificationFailed: (value) {
-          showToast("Error", value.message ?? "", true);
-        },
-        codeSent: (String verificationId, int? resendToken) async {
-          codeSent(verificationId, resendToken);
-        },
-        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
-      );
-    } on fb.FirebaseAuthException catch (e) {
-      showToast("Error", e.message ?? "", true);
-    }
-  }
+
 
   @override
   Future<AppUser?> signInWithSmsCode(String verificationId, String smsCode) async {
@@ -151,5 +110,16 @@ class FirebaseAuthRepository implements AuthRepository {
   @override
   Future<void> signOut() async {
     await Future.wait([_auth.signOut(), GoogleSignIn().signOut()]);
+  }
+
+  @override
+  Future<AppUser?> signInWithAnonymous() async {
+    try {
+      final cred = await _auth.signInAnonymously();
+      return cred.user == null ? null : AppUser.fromFirebaseUser(cred.user!);
+    } on fb.FirebaseAuthException catch (e) {
+      showToast("Error", e.message ?? "", true);
+      return null;
+    }
   }
 }

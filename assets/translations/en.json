@@ -12,6 +12,7 @@
   "email":"Email",
   "dateOfBirth": "Date of Birth",
   "forgotPasswordTitle": "Forgot Password",
+  "continueWithoutRegistration": "Continue without registration",
   "phoneVerification": "Phone Verification",
   "sendPhone": "We sent the OTP code to your phone, please check it and enter below",
   "send": "Send",

@@ -13,6 +13,7 @@
   "dateOfBirth": "Doğum Tarihi",
   "forgotPasswordTitle": "Şifremi Unuttum",
   "send": "Gönder",
+  "continueWithoutRegistration": "Kayıt olmadan devam et",
   "sendPhone": "Telefonunuza OTP kodunu gönderdik, lütfen kontrol edin ve aşağıya girin",
   "phoneVerification": "Telefon Doğrulaması",
   "pleasePhoneNumber": "Lütfen aşağıya telefon numaranızı girin, size OTP kodunu gönderelim"

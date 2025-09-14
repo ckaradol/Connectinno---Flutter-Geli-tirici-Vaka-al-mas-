@@ -65,7 +65,14 @@ class LoginScreen extends StatelessWidget {
                         AppButton(title: "signIn".tr(),),
                         SizedBox(height: defaultPadding),
                         GoogleButton(),
-                        SizedBox(height: defaultPadding * 2),
+                        SizedBox(height: appPadding),
+                        TextButton(
+                          style: ButtonStyle(foregroundColor: WidgetStatePropertyAll(AppTheme.primaryColor(context)), padding: WidgetStatePropertyAll(EdgeInsets.all(0))),
+                          onPressed: () {
+                            NavigationService.push(ForgotPasswordScreen());
+                          },
+                          child: Text("continueWithoutRegistration".tr()),
+                        ),
                         Wrap(
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [

@@ -9,6 +9,7 @@ abstract class AuthEvent extends Equatable {
 class AppStarted extends AuthEvent {}
 
 class SignInWithGoogle extends AuthEvent {}
+class SignInWithAnonymous extends AuthEvent {}
 
 class SignInWithEmailPassword extends AuthEvent {
   final String email;
