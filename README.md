@@ -59,7 +59,7 @@ Uygulama, çevrimdışı önbellekleme, global durum yönetimi ve kullanıcı do
 
 ```bash
 # Repo klonla
-git clone https://github.com/kullanici/connectinno_flutter.git
+git clone https://github.com/ckaradol/Connectinno---Flutter-Geli-tirici-Vaka-al-mas-
 cd connectinno_flutter
 
 # Bağımlılıkları yükle
