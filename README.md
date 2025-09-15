@@ -53,8 +53,6 @@ Uygulama, çevrimdışı önbellekleme, global durum yönetimi ve kullanıcı do
 ![Undo Delete](assets/screens/undo_delete.png)  
 *Silinen not için geri alma (Undo)*
 
-![Pinned Notes](assets/screens/pinned_notes.png)  
-*Sabitlenmiş notlar listesi*
 
 ---
 
