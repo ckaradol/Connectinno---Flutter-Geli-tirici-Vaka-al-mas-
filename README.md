@@ -16,8 +16,11 @@ Uygulama, çevrimdışı önbellekleme, global durum yönetimi ve kullanıcı do
 - Not oluşturma, okuma, güncelleme ve silme.
 - Silinen notlar için `Undo` (geri alma) özelliği.
 
-### Notları Sabitleme / Favorilere Ekleme
-- Notlar listede sabitlenebilir ve en üstte gösterilir.
+### Notları infinite scroll ile yükleme 
+- Performans kaybını önlemek amacı ile infinite scroll ile performansı arttırdım.
+- 
+### Türkçe ve İngilizce Dil desteği 
+- Türkçe ve İngilizce dil desteği sağladım
 
 ### Arama & Filtreleme
 - Başlığa veya içeriğe göre notları filtreleme.
