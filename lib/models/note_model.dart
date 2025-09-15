@@ -1,27 +1,27 @@
 import 'package:equatable/equatable.dart';
 
 class Note extends Equatable {
-  final String id;
+  final String? id;
   final String title;
   final String content;
   final String? userId;
   final DateTime? createdAt;
 
   const Note({
-    required this.id,
+     this.id,
     required this.title,
     required this.content,
-    required this.userId,
-    required this.createdAt,
+     this.userId,
+     this.createdAt,
   });
 
   factory Note.fromJson(Map<dynamic, dynamic> json) {
     return Note(
-      id: json['id'] as String,
+      id: json['id'] ,
       title: json['title'] as String,
       content: json['content'] as String,
-      userId: json['user_id'] as String,
-      createdAt: json['created_at'] !=null?null:DateTime.tryParse(json['created_at']),
+      userId: json['user_id'] ,
+      createdAt: json['created_at'] ==null?null:DateTime.tryParse(json['created_at']),
     );
   }
 
@@ -31,7 +31,7 @@ class Note extends Equatable {
       'title': title,
       'content': content,
       'user_id': userId,
-      'created_at': createdAt,
+      'created_at': createdAt?.toIso8601String(),
     };
   }
 
@@ -52,10 +52,7 @@ class Note extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, title, content, userId, createdAt];
+  List<Object?> get props => [id];
 
-  @override
-  String toString() {
-    return 'Note(id: $id, title: $title, content: $content, userId: $userId, createdAt: $createdAt)';
-  }
+
 }

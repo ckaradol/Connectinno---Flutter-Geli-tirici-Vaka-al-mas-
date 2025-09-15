@@ -103,6 +103,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onSignOutRequested(SignOutRequested event, Emitter<AuthState> emit) async {
     await authRepository.signOut();
+    NavigationService.replaceWith("/login");
     emit(Unauthenticated());
   }
 }

@@ -31,30 +31,44 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) =>
-        AuthBloc(authRepository: FirebaseAuthRepository())
-          ..add(AppStarted())),
+        BlocProvider(create: (context) => AuthBloc(authRepository: FirebaseAuthRepository())..add(AppStarted())),
         BlocProvider(create: (context) => NoteBloc()),
       ],
       child: BlocConsumer<AuthBloc, AuthState>(
+        listenWhen: (lastState,state){
+          if(lastState is Authenticated) {
+            return false;
+          } else {
+            return true;
+          }
+        },
         listener: (context, state) {
           if (state is Authenticated) {
             context.read<NoteBloc>().add(InitRepository(user: state.user.user));
           }
         },
         builder: (context, state) {
-          return ToastificationWrapper(
-            child: MaterialApp(
-              navigatorKey: NavigationService.navigatorKey,
-              debugShowCheckedModeBanner: false,
-              title: 'Note App',
-              routes: {"/home": (context) => HomeScreen(), "/login": (context) => LoginScreen(), "/register": (context) => RegisterScreen(), "/forgotPassword": (context) => ForgotPasswordScreen()},
-              localizationsDelegates: context.localizationDelegates,
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
-              theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: AppTheme.primaryColor(context))),
-              home: SplashScreen()
-            ),
+          return BlocBuilder<NoteBloc, NoteState>(
+            builder: (context, state) {
+              return ToastificationWrapper(
+                child: MaterialApp(
+                  navigatorKey: NavigationService.navigatorKey,
+                  debugShowCheckedModeBanner: false,
+                  title: 'Note App',
+                  routes: {
+                    "/home": (context) => HomeScreen(),
+                    "/login": (context) => LoginScreen(),
+                    "/register": (context) => RegisterScreen(),
+                    "/forgotPassword": (context) => ForgotPasswordScreen(),
+                  },
+                  localizationsDelegates: context.localizationDelegates,
+                  supportedLocales: context.supportedLocales,
+                  locale: context.locale,
+                  theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: AppTheme.primaryColor(context))),
+                  home: SplashScreen(),
+                ),
+              );
+            },
           );
         },
       ),

@@ -1,13 +1,12 @@
 import 'package:sqflite/sqflite.dart';
+
 import '../models/note_model.dart';
 import '../repositories/note_repository.dart';
-import 'package:path/path.dart';
+
 class LocalNoteService implements NoteRepository {
-   final Database _db;
+  final Database _db;
 
-  LocalNoteService( this._db);
-
-
+  LocalNoteService(this._db);
 
   @override
   Future<List<Note>> getNotes({int limit = 10, String? nextToken, String? search}) async {
@@ -23,27 +22,19 @@ class LocalNoteService implements NoteRepository {
     args.add(limit);
 
     if (nextToken != null) {
-      where += where.isEmpty ? 'WHERE createdAt > ?' : ' AND createdAt > ?';
+      where += where.isEmpty ? 'WHERE created_at > ?' : ' AND created_at > ?';
       args.add(nextToken);
     }
 
-    final result = await _db.rawQuery(
-      'SELECT * FROM notes $where ORDER BY createdAt DESC $limitOffset',
-      args,
-    );
+    final result = await _db.rawQuery('SELECT * FROM notes $where ORDER BY created_at DESC $limitOffset', args);
     return result.map((json) => Note.fromJson(json)).toList();
   }
 
-  @override
-  Future<Note> getNoteById(String id) async {
-    final result = await _db.query('notes', where: 'id = ?', whereArgs: [id]);
-    if (result.isEmpty) throw Exception('Note not found');
-    return Note.fromJson(result.first);
-  }
 
   @override
   Future<Note> createNote(Note note) async {
     await _db.insert('notes', note.toJson());
+
     return note;
   }
 

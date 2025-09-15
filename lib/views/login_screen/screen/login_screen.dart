@@ -43,6 +43,8 @@ class LoginScreen extends StatelessWidget {
                             builder: (context, isObscured) {
                               return AppTextFormField(
                                 controller: controllerPassword,
+                                minLine: 1,
+                                maxLine: 1,
                                 obsecureText: isObscured,
                                 hintText: "password".tr(),
                                 suffixIcon: IconButton(onPressed: () {

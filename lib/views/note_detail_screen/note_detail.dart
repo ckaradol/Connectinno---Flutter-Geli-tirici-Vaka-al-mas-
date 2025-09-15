@@ -1,0 +1,1 @@
+export 'screen/note_detail_screen.dart';

@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 class LightTheme {
   static const Color backgroundColor = Color(0xffF0F3F8);
   static const Color inactiveColor = Color(0xffEDF1F7);
+  static const Color deleteColor = Colors.red;
   static const Color onboardBackgroundColor = Colors.white;
   static const Color primaryColor = Color(0xff007AFF);
   static const Color hintColor = Color(0xff8F9BB3);
@@ -11,7 +12,7 @@ class LightTheme {
   static const Color titleTextColor = Color(0xff222B45);
   static const Color buttonShadowColor = Color.fromRGBO(0, 149, 255, 0.28);
   static const Color fillColor = Colors.white;
-  static const Color subtitleColor = Color(0xff687C97);
+  static const Color shadowColor = Color(0xff687C97);
   static const Color buttonTextColor = Colors.white;
   static const Color toastPrimaryColor = Colors.white;
   static const Color toastBackgroundColor = Colors.green;
@@ -32,12 +33,13 @@ class DarkTheme {
   static const Color onboardBackgroundColor = Colors.white;
   static const Color inactiveColor = Color(0xffEDF1F7);
   static const Color backgroundColor = Color(0xffF0F3F8);
+  static const Color deleteColor = Colors.red;
   static const Color primaryColor = Color(0xff007AFF);
   static const Color bottomBarText = Color(0xffC5CEE0);
   static const Color helpYouTextColor = Color(0xff9CC1E9);
   static const Color titleTextColor = Color(0xff222B45);
   static const Color hintColor = Color(0xff8F9BB3);
-  static const Color subtitleColor = Color(0xff687C97);
+  static const Color shadowColor = Color(0xff687C97);
   static const Color fillColor = Colors.white;
   static const Color buttonShadowColor = Color.fromRGBO(0, 149, 255, 0.28);
   static const Color buttonTextColor = Colors.white;
@@ -73,15 +75,19 @@ class AppTheme {
     final brightness = Theme.of(context).brightness;
     return brightness == Brightness.dark ? DarkTheme.onboardBackgroundColor : LightTheme.onboardBackgroundColor;
   }
+ static Color deleteColor(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    return brightness == Brightness.dark ? DarkTheme.deleteColor : LightTheme.deleteColor;
+  }
 
   static Color inactiveColor(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     return brightness == Brightness.dark ? DarkTheme.inactiveColor : LightTheme.inactiveColor;
   }
 
-  static Color subtitleColor(BuildContext context) {
+  static Color shadowColor(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    return brightness == Brightness.dark ? DarkTheme.subtitleColor : LightTheme.subtitleColor;
+    return brightness == Brightness.dark ? DarkTheme.shadowColor : LightTheme.shadowColor;
   }
 
   static Color primaryColor(BuildContext context) {
@@ -127,6 +133,7 @@ class AppTheme {
 
 class AppAssets {
   static const String logo = "assets/icons/logo.svg";
+  static const String search = "assets/icons/search.svg";
   static const String dateOfBirth = "assets/icons/date_of_birth_icon.svg";
   static const String visibleOff = "assets/icons/visible_off.svg";
   static const String visible = "assets/icons/visible.svg";

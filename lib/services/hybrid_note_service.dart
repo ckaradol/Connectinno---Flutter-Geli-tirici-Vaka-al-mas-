@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../models/note_model.dart';
 import '../repositories/note_repository.dart';
 
@@ -23,6 +24,7 @@ class HybridNoteService implements NoteRepository {
 
   Future<void> sync() async {
     if (!await _hasConnection()) return;
+    User? user= FirebaseAuth.instance.currentUser;
 
     final localNotes = await local.getNotes();
     final remoteNotes = await remote.getNotes();
@@ -31,13 +33,13 @@ class HybridNoteService implements NoteRepository {
     final localMap = {for (var n in localNotes) n.id: n};
 
     for (var localNote in localNotes) {
-      if (!remoteMap.containsKey(localNote.id)) {
+      if ((!remoteMap.containsKey(localNote.id))&&localNote.userId==user?.uid) {
         await remote.createNote(localNote);
       }
     }
 
     for (var remoteNote in remoteNotes) {
-      if (!localMap.containsKey(remoteNote.id)) {
+      if ((!localMap.containsKey(remoteNote.id))&&remoteNote.userId==user?.uid) {
         await local.createNote(remoteNote);
       }
     }
@@ -56,16 +58,6 @@ class HybridNoteService implements NoteRepository {
     }
   }
 
-  @override
-  Future<Note> getNoteById(String id) async {
-    if (await _hasConnection()) {
-      final note = await remote.getNoteById(id);
-      await local.updateNote(note);
-      return note;
-    } else {
-      return local.getNoteById(id);
-    }
-  }
 
   @override
   Future<Note> createNote(Note note) async {

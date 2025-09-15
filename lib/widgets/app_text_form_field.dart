@@ -7,11 +7,13 @@ class AppTextFormField extends StatelessWidget {
   final TextInputType? textType;
   final bool? obsecureText;
   final String? hintText;
+  final int? minLine;
+  final int? maxLine;
   final Widget? suffixIcon;
   final Function()? onTap;
 
   const AppTextFormField({
-    super.key, this.hintText, this.suffixIcon, this.obsecureText, this.textType, this.controller, this.onTap,
+    super.key, this.hintText, this.suffixIcon, this.obsecureText, this.textType, this.controller, this.onTap, this.minLine=1, this.maxLine=1,
   });
 
   @override
@@ -20,6 +22,8 @@ class AppTextFormField extends StatelessWidget {
       controller: controller,
       onTap: onTap,
       keyboardType: textType,
+      minLines: minLine,
+      maxLines: maxLine,
       obscureText: obsecureText ?? false,
       decoration: InputDecoration(
           fillColor: AppTheme.fillColor(context),

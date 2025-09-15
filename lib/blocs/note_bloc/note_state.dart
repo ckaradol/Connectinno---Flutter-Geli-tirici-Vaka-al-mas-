@@ -8,7 +8,9 @@ class NoteLoading extends NoteState {}
 
 class NoteLoaded extends NoteState {
   final List<Note> notes;
-  NoteLoaded(this.notes);
+  final bool? isMore;
+  final bool? isLoading;
+  NoteLoaded(this.notes,  {this.isMore,this.isLoading=false,});
 }
 
 class NoteError extends NoteState {

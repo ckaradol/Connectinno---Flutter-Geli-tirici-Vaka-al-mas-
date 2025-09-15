@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import '../theme.dart';
 
 class AppButton extends StatelessWidget {
+  final bool? delete;
   final String title;
   final bool? isLoading;
   final Function()? onTap;
 
-  const AppButton({super.key, this.onTap, required this.title, this.isLoading});
+  const AppButton({super.key, this.onTap, required this.title, this.isLoading, this.delete});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class AppButton extends StatelessWidget {
         width: double.maxFinite,
         height: buttonHeight,
         decoration: BoxDecoration(
-          color: AppTheme.primaryColor(context),
+          color:delete==true?AppTheme.deleteColor(context): AppTheme.primaryColor(context),
           borderRadius: BorderRadius.circular(borderRadius),
           boxShadow: [BoxShadow(color: AppTheme.buttonShadowColor(context), offset: Offset(0, 7), blurRadius: 15)],
         ),

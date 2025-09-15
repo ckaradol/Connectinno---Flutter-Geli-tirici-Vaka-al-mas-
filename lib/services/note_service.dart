@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:noteapp/theme.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../models/note_model.dart';
 import '../repositories/note_repository.dart';
@@ -19,7 +20,7 @@ class NoteService implements NoteRepository {
   String? _token;
 
   NoteService({Dio? dio, String? token})
-      : _dio = dio ?? Dio(BaseOptions(baseUrl: "https://my-fastapi-845518210163.europe-west1.run.app")),
+      : _dio = dio ?? Dio(BaseOptions(baseUrl: baseUrl)),
         _token = token {
     if (kDebugMode) {
       _dio.interceptors.add(PrettyDioLogger(
@@ -95,26 +96,16 @@ class NoteService implements NoteRepository {
     }
   }
 
-  @override
-  Future<Note> getNoteById(String id, {CancelToken? cancelToken}) async {
-    final response = await _dio.get('/notes/$id', cancelToken: cancelToken);
-    if (response.statusCode == 200) {
-      return Note.fromJson(response.data);
-    } else {
-      _handleError(response);
-      return Note.fromJson({}); // unreachable
-    }
-  }
 
   @override
   Future<Note> createNote(Note note, {CancelToken? cancelToken}) async {
     final response =
     await _dio.post('/notes', data: note.toJson(), cancelToken: cancelToken);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return Note.fromJson(response.data);
+      return Note.fromJson(response.data["data"]);
     } else {
       _handleError(response);
-      return Note.fromJson({}); // unreachable
+      return Note.fromJson({});
     }
   }
 
@@ -123,10 +114,10 @@ class NoteService implements NoteRepository {
     final response = await _dio.put('/notes/${note.id}',
         data: note.toJson(), cancelToken: cancelToken);
     if (response.statusCode == 200) {
-      return Note.fromJson(response.data);
+      return Note.fromJson(response.data["data"]);
     } else {
       _handleError(response);
-      return Note.fromJson({}); // unreachable
+      return Note.fromJson({});
     }
   }
 
