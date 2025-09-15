@@ -18,18 +18,9 @@ class LocalNoteService implements NoteRepository {
       args.addAll(['%$search%', '%$search%']);
     }
 
-    String limitOffset = 'LIMIT ?';
-    args.add(limit);
-
-    if (nextToken != null) {
-      where += where.isEmpty ? 'WHERE created_at > ?' : ' AND created_at > ?';
-      args.add(nextToken);
-    }
-
-    final result = await _db.rawQuery('SELECT * FROM notes $where ORDER BY created_at DESC $limitOffset', args);
+    final result = await _db.rawQuery('SELECT * FROM notes $where ORDER BY created_at DESC', args);
     return result.map((json) => Note.fromJson(json)).toList();
   }
-
 
   @override
   Future<Note> createNote(Note note) async {

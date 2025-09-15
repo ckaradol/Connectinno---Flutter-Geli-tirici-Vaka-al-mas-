@@ -74,6 +74,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
         }
         emit(NoteLoaded(_notes,isMore: isMore,));
       } catch (e) {
+        print(e);
         emit(NoteError(e.toString()));
       }
     });
