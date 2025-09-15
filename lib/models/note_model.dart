@@ -4,8 +4,8 @@ class Note extends Equatable {
   final String id;
   final String title;
   final String content;
-  final String userId;
-  final String createdAt;
+  final String? userId;
+  final DateTime? createdAt;
 
   const Note({
     required this.id,
@@ -15,13 +15,13 @@ class Note extends Equatable {
     required this.createdAt,
   });
 
-  factory Note.fromJson(Map<String, dynamic> json) {
+  factory Note.fromJson(Map<dynamic, dynamic> json) {
     return Note(
       id: json['id'] as String,
       title: json['title'] as String,
       content: json['content'] as String,
       userId: json['user_id'] as String,
-      createdAt: json['created_at'] as String,
+      createdAt: json['created_at'] !=null?null:DateTime.tryParse(json['created_at']),
     );
   }
 
@@ -40,7 +40,7 @@ class Note extends Equatable {
     String? title,
     String? content,
     String? userId,
-    String? createdAt,
+    DateTime? createdAt,
   }) {
     return Note(
       id: id ?? this.id,

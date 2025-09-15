@@ -7,14 +7,16 @@ import '../blocs/auth_bloc/auth_bloc.dart';
 import '../theme.dart';
 
 class GoogleButton extends StatelessWidget {
+
   const GoogleButton({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    AuthState authState=context.read<AuthBloc>().state;
     return InkWell(
-      onTap: (){
+      onTap:authState is AuthLoading?null: (){
         context.read<AuthBloc>().add(SignInWithGoogle());
       },
       child: Container(

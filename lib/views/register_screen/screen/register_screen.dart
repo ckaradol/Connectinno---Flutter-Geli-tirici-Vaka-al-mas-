@@ -18,10 +18,10 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController fullName = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
-  final TextEditingController phoneNumber = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+   AuthState authState= context.read<AuthBloc>().state;
     return Scaffold(
       appBar: AppBar(backgroundColor: AppTheme.backgroundColor(context)),
       backgroundColor: AppTheme.backgroundColor(context),
@@ -70,9 +70,9 @@ class RegisterScreen extends StatelessWidget {
 
                     SizedBox(height: defaultPadding),
                     AppButton(
+                      isLoading: authState is AuthLoading,
                       title: "signUp".tr(),
                       onTap: () {
-                        String raw = phoneNumber.text;
 
                         context.read<AuthBloc>().add(SignUpWithEmailPassword(email.text, password.text, fullName.text));
                       },

@@ -16,11 +16,11 @@ abstract class AuthRepository {
       String password, {
         String? displayName,
       });
-  Future<void> sendEmailVerification();
   Future<void> sendPasswordResetEmail(String email);
 
 
   Future<AppUser?> signInWithGoogle();
+  Future<bool> forgotPassword(String mail);
 
 
 

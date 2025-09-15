@@ -18,6 +18,7 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController controllerPassword=TextEditingController();
   @override
   Widget build(BuildContext context) {
+    AuthState authState=context.read<AuthBloc>().state;
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor(context),
       body: SafeArea(
@@ -65,7 +66,9 @@ class LoginScreen extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: defaultPadding / 1.5),
-                        AppButton(title: "signIn".tr(),onTap: (){
+                        AppButton(
+                          isLoading: authState is AuthLoading,
+                          title: "signIn".tr(),onTap: (){
                           context.read<AuthBloc>().add(SignInWithEmailPassword(controllerEmail.text, controllerPassword.text));
                         },),
                         SizedBox(height: defaultPadding),

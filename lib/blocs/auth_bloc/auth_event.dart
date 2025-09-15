@@ -9,6 +9,11 @@ abstract class AuthEvent extends Equatable {
 class AppStarted extends AuthEvent {}
 
 class SignInWithGoogle extends AuthEvent {}
+class ForgotPassword extends AuthEvent {
+  final String mail;
+
+  ForgotPassword({required this.mail});
+}
 class SignInWithAnonymous extends AuthEvent {}
 
 class SignInWithEmailPassword extends AuthEvent {

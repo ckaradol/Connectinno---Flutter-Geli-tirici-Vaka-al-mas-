@@ -3,6 +3,9 @@
   "home": "Anasayfa",
   "forgotPassword": "Şifrenizi mi unuttunuz?",
   "signIn": "Giriş Yap",
+  "error": "Hata",
+  "emailRequired": "Email boş olamaz",
+  "passwordRequired": "Şifre boş olamaz",
   "connectWithGoogle": "Google ile Bağlan",
   "dontAccount": "Hesabınız yok mu?",
   "signUp": "Kayıt Ol",
@@ -10,11 +13,12 @@
   "registerTitle": "Lütfen bilgilerinizi aşağıya yazın",
   "fullName": "Adınız ve Soyadınız",
   "email": "Email",
+  "success": "Başarılı",
+  "emailEmpty": "Email boş olamaz",
+  "successPasswordReset": "{email} adresine şifre sıfırlama maili gönderildi",
   "dateOfBirth": "Doğum Tarihi",
   "forgotPasswordTitle": "Şifremi Unuttum",
   "send": "Gönder",
   "continueWithoutRegistration": "Kayıt olmadan devam et",
-  "sendPhone": "Telefonunuza OTP kodunu gönderdik, lütfen kontrol edin ve aşağıya girin",
-  "phoneVerification": "Telefon Doğrulaması",
-  "pleasePhoneNumber": "Lütfen aşağıya telefon numaranızı girin, size OTP kodunu gönderelim"
+  "pleasePhoneNumber": "Lütfen aşağıya e-posta adresinizi girin, size bir şifre sıfırlama URL'si gönderelim."
 }

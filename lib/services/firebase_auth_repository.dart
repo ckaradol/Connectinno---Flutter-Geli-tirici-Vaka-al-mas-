@@ -1,14 +1,12 @@
 import 'dart:async';
 
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:noteapp/services/show_toast.dart';
 
 import '../models/app_user.dart';
 import '../repositories/auth_repository.dart';
-import '../views/forgot_password_screen/screen/forgot_password_screen.dart';
-import '../views/home_screen/screen/home_screen.dart';
 import 'navigation_service.dart';
 
 class FirebaseAuthRepository implements AuthRepository {
@@ -17,24 +15,40 @@ class FirebaseAuthRepository implements AuthRepository {
   FirebaseAuthRepository({fb.FirebaseAuth? auth}) : _auth = auth ?? fb.FirebaseAuth.instance;
 
   @override
-  AppUser? get currentUser => _auth.currentUser == null ? null :  AppUser.fromFirebaseUser(_auth.currentUser!);
+  AppUser? get currentUser => _auth.currentUser == null ? null : AppUser.fromFirebaseUser(_auth.currentUser!);
 
   @override
   Stream<AppUser?> authStateChanges() => _auth.authStateChanges().map((u) => u == null ? null : AppUser.fromFirebaseUser(u));
 
   @override
   Future<AppUser?> signInWithEmailPassword(String email, String password) async {
+    if (email.trim().isEmpty) {
+      showToast("error".tr(), "emailRequired".tr(), true);
+      return null;
+    }
+    if (password.trim().isEmpty) {
+      showToast("error".tr(), "passwordRequired".tr(), true);
+      return null;
+    }
     try {
       final cred = await _auth.signInWithEmailAndPassword(email: email, password: password);
       return cred.user == null ? null : AppUser.fromFirebaseUser(cred.user!);
     } on fb.FirebaseAuthException catch (e) {
-      showToast("Error", e.message ?? "", true);
+      showToast("error".tr(), e.message ?? "", true);
       return null;
     }
   }
 
   @override
   Future<AppUser?> signUpWithEmailPassword(String email, String password, {String? displayName}) async {
+    if (email.trim().isEmpty) {
+      showToast("error".tr(), "emailRequired".tr(), true);
+      return null;
+    }
+    if (password.trim().isEmpty) {
+      showToast("error".tr(), "passwordRequired".tr(), true);
+      return null;
+    }
     try {
       final cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       if (displayName != null && cred.user != null) {
@@ -43,17 +57,11 @@ class FirebaseAuthRepository implements AuthRepository {
       }
       return cred.user == null ? null : AppUser.fromFirebaseUser(cred.user!);
     } on fb.FirebaseAuthException catch (e) {
-      showToast("Error", e.message ?? "", true);
+      showToast("error".tr(), e.message ?? "", true);
       return null;
     }
   }
 
-  @override
-  Future<void> sendEmailVerification() async {
-    final user = _auth.currentUser;
-    if (user == null) throw StateError('No current user');
-    await user.sendEmailVerification();
-  }
 
   @override
   Future<void> sendPasswordResetEmail(String email) async {
@@ -77,17 +85,14 @@ class FirebaseAuthRepository implements AuthRepository {
       }
       return user == null ? null : AppUser.fromFirebaseUser(user);
     } on fb.FirebaseAuthException catch (e) {
-      showToast("Error", e.message ?? "", true);
+      showToast("error".tr(), e.message ?? "", true);
       return null;
     }
-
   }
-
-
 
   @override
   Future<AppUser?> signInWithSmsCode(String verificationId, String smsCode) async {
-    try{
+    try {
       final credential = fb.PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
 
       final currentUser = _auth.currentUser;
@@ -100,11 +105,10 @@ class FirebaseAuthRepository implements AuthRepository {
       }
 
       return userCred.user == null ? null : AppUser.fromFirebaseUser(userCred.user!);
-    }on fb.FirebaseAuthException catch (e) {
-      showToast("Error", e.message ?? "", true);
+    } on fb.FirebaseAuthException catch (e) {
+      showToast("error".tr(), e.message ?? "", true);
       return null;
     }
-
   }
 
   @override
@@ -118,8 +122,23 @@ class FirebaseAuthRepository implements AuthRepository {
       final cred = await _auth.signInAnonymously();
       return cred.user == null ? null : AppUser.fromFirebaseUser(cred.user!);
     } on fb.FirebaseAuthException catch (e) {
-      showToast("Error", e.message ?? "", true);
+      showToast("error".tr(), e.message ?? "", true);
       return null;
+    }
+  }
+
+  @override
+  Future<bool> forgotPassword(String mail) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: mail);
+
+      showToast("success".tr(), "successPasswordReset".tr(namedArgs: {
+        "email":mail
+      }), false);
+      return true;
+    } catch (e) {
+      showToast("error".tr(), "emailEmpty".tr(), true);
+      return false;
     }
   }
 }

@@ -52,7 +52,6 @@ class NoteService implements NoteRepository {
     ));
   }
 
-  @override
   void updateToken(String token) {
     _token = token;
   }
@@ -86,8 +85,10 @@ class NoteService implements NoteRepository {
       if (nextToken != null) "last_id": nextToken,
     }, cancelToken: cancelToken);
     if (response.statusCode == 200) {
-      final List data = response.data;
-      return data.map((json) => Note.fromJson(json)).toList();
+      final Map data = response.data;
+      final list = data["data"] as List;
+      final notes = list.map((json) => Note.fromJson(json)).toList();
+      return notes;
     } else {
       _handleError(response);
       return [];

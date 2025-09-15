@@ -1,13 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:noteapp/views/home_screen/home.dart';
-import 'package:noteapp/views/login_screen/login.dart';
 
 import '../../models/app_user.dart';
 import '../../repositories/auth_repository.dart';
 import '../../services/navigation_service.dart';
 
 part 'auth_event.dart';
+
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -20,15 +19,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignUpWithEmailPassword>(_onSignUpWithEmailPassword);
     on<SignOutRequested>(_onSignOutRequested);
     on<SignInWithAnonymous>(_onSignInWithAnonymous);
+    on<ForgotPassword>(_onForgotPassword);
   }
 
   Future<void> _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
     final user = authRepository.currentUser;
     if (user != null) {
-      NavigationService.replaceWith("/home");
+      await Future.delayed(Duration(seconds: 1), () {
+        NavigationService.replaceWith("/home");
+      });
       emit(Authenticated(user));
     } else {
-      NavigationService.replaceWith("/login");
+      await Future.delayed(Duration(seconds: 1), () {
+        NavigationService.replaceWith("/login");
+      });
       emit(Unauthenticated());
     }
   }
@@ -62,7 +66,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthFailure(e.toString()));
     }
   }
- Future<void> _onSignInWithAnonymous(SignInWithAnonymous event, Emitter<AuthState> emit) async {
+
+  Future<void> _onForgotPassword(ForgotPassword event, Emitter<AuthState> emit) async {
+    await authRepository.forgotPassword(event.mail);
+  }
+
+  Future<void> _onSignInWithAnonymous(SignInWithAnonymous event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
       final user = await authRepository.signInWithAnonymous();
@@ -81,13 +90,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
     try {
       final user = await authRepository.signUpWithEmailPassword(event.email, event.password, displayName: event.displayName);
-      if(user!=null) {
+      if (user != null) {
         NavigationService.replaceWith("/home");
         emit(Authenticated(user));
       } else {
         emit(Unauthenticated());
       }
-
     } catch (e) {
       emit(AuthFailure(e.toString()));
     }

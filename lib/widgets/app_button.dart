@@ -5,14 +5,15 @@ import '../theme.dart';
 
 class AppButton extends StatelessWidget {
   final String title;
+  final bool? isLoading;
   final Function()? onTap;
 
-  const AppButton({super.key, this.onTap, required this.title});
+  const AppButton({super.key, this.onTap, required this.title, this.isLoading});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap:isLoading==true?null: onTap,
       child: Container(
         width: double.maxFinite,
         height: buttonHeight,
@@ -22,7 +23,7 @@ class AppButton extends StatelessWidget {
           boxShadow: [BoxShadow(color: AppTheme.buttonShadowColor(context), offset: Offset(0, 7), blurRadius: 15)],
         ),
         child: Center(
-          child: Text(title, style: TextStyle(color: AppTheme.buttonTextColor(context))),
+          child: isLoading==true?CircularProgressIndicator(color: AppTheme.buttonTextColor(context),): Text(title, style: TextStyle(color: AppTheme.buttonTextColor(context))),
         ),
       ),
     );

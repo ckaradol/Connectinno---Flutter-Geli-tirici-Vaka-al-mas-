@@ -13,8 +13,13 @@ class LightTheme {
   static const Color fillColor = Colors.white;
   static const Color subtitleColor = Color(0xff687C97);
   static const Color buttonTextColor = Colors.white;
+  static const Color toastPrimaryColor = Colors.white;
+  static const Color toastBackgroundColor = Colors.green;
+  static const Color toastBackgroundErrorColor = Colors.red;
+  static const Color toastForegroundColor = Colors.white;
 }
-const baseUrl="https://my-fastapi-845518210163.europe-west1.run.app";
+
+const baseUrl = "https://my-fastapi-845518210163.europe-west1.run.app";
 const double defaultPadding = 40;
 const double appPadding = 16;
 const double iconPadding = 16;
@@ -36,12 +41,32 @@ class DarkTheme {
   static const Color fillColor = Colors.white;
   static const Color buttonShadowColor = Color.fromRGBO(0, 149, 255, 0.28);
   static const Color buttonTextColor = Colors.white;
+  static const Color toastPrimaryColor = Colors.white;
+  static const Color toastBackgroundColor = Colors.green;
+  static const Color toastBackgroundErrorColor = Colors.red;
+  static const Color toastForegroundColor = Colors.white;
 }
 
 class AppTheme {
   static Color backgroundColor(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     return brightness == Brightness.dark ? DarkTheme.backgroundColor : LightTheme.backgroundColor;
+  }
+
+  static Color toastBackgroundColor() {
+    return  LightTheme.toastBackgroundColor;
+  }
+
+  static Color toastPrimaryColor() {
+    return LightTheme.toastBackgroundColor;
+  }
+
+  static Color toastBackgroundErrorColor() {
+    return LightTheme.toastBackgroundErrorColor;
+  }
+
+  static Color toastForegroundColor() {
+    return LightTheme.toastForegroundColor;
   }
 
   static Color onboardBackgroundColor(BuildContext context) {

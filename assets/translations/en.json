@@ -1,6 +1,9 @@
 {
   "home": "Home",
   "password": "Password",
+  "error": "Error",
+  "emailRequired": "Email cannot be empty",
+  "passwordRequired": "Password cannot be empty",
   "forgotPassword": "Forgot Password?",
   "signIn": "Sign In",
   "connectWithGoogle": "Connect with Google",
@@ -10,11 +13,13 @@
   "registerTitle":"Please write your information below",
   "fullName":"Full Name",
   "email":"Email",
+  "close":"Close",
   "dateOfBirth": "Date of Birth",
+  "success": "Success",
+  "emailEmpty": "Email cannot be empty",
+  "successPasswordReset": "Password reset mail sent to {email}",
   "forgotPasswordTitle": "Forgot Password",
   "continueWithoutRegistration": "Continue without registration",
-  "phoneVerification": "Phone Verification",
-  "sendPhone": "We sent the OTP code to your phone, please check it and enter below",
   "send": "Send",
-  "pleasePhoneNumber": "Please enter your phone number below and we will send you the OTP code"
+  "pleasePhoneNumber": "Please enter your email address below and we will send you a password reset URL."
 }

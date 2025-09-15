@@ -1,10 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noteapp/blocs/auth_bloc/auth_bloc.dart';
+import 'package:noteapp/widgets/app_text_form_field.dart';
 
-import '../../../services/firebase_auth_repository.dart';
-import '../../../services/navigation_service.dart';
 import '../../../theme.dart';
 import '../../../widgets/app_button.dart';
 
@@ -12,6 +11,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   ForgotPasswordScreen({super.key});
 
   final TextEditingController phoneNumber = TextEditingController();
+  final TextEditingController email = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +35,20 @@ class ForgotPasswordScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(color: AppTheme.hintColor(context), fontSize: 15),
                 ),
+                SizedBox(height: defaultPadding),
+                AppTextFormField(controller: email, hintText: "email".tr(), textType: TextInputType.emailAddress),
               ],
             ),
-            Builder(
-              builder: (context) {
-                return AppButton(
+            Column(
+              children: [
+                AppButton(
                   title: "send".tr(),
                   onTap: () {
+                    context.read<AuthBloc>().add(ForgotPassword(mail: email.text));
                   },
-                );
-              }
+                ),
+                SizedBox(height: defaultPadding),
+              ],
             ),
           ],
         ),

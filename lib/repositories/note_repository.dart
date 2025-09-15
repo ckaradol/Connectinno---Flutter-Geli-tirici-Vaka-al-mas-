@@ -6,5 +6,4 @@ abstract class NoteRepository {
   Future<Note> createNote(Note note);
   Future<Note> updateNote(Note note);
   Future<void> deleteNote(String id);
-  void updateToken(String token);
 }
